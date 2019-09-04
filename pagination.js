@@ -6,10 +6,11 @@
  * Copyright 2019, Sabbir Hossain Rupom
  */
 
-"use strict";
-
+/*jshint esversion: 6 */
 (function ($) {
+    "use strict";
     /**
+     * Plugin root function rpmPagination()
      * 
      * @param object options Option parameter for intializing pagination plugin
      * *-----* {property} limit Pagination item limit, [ optional ] default is 10 
@@ -99,7 +100,7 @@
         if (type === 'prev') {
             next = next - limit;
             current = next - limit + 1;
-            for (var i = current; i <= next; i++) {
+            for (let i = current; i <= next; i++) {
                 $('.' + element + '-' + i).removeClass('hide');
             }
             current_page--;
@@ -107,14 +108,14 @@
         } else if (type === 'next') {
             current = next + 1;
             next = next + limit;
-            for (var i = current; i <= next; i++) {
+            for (let i = current; i <= next; i++) {
                 $('.' + element + '-' + i).removeClass('hide');
             }
             current_page++;
         } else if (type === 'page-num') {
             current = (limit * (current_page - 1)) + 1;
             next = (limit * (current_page - 1)) + limit;
-            for (var i = current; i <= next; i++) {
+            for (let i = current; i <= next; i++) {
                 $('.' + element + '-' + i).removeClass('hide');
             }
         }
@@ -157,23 +158,11 @@
         }
         menuHtml += '<li class="page-num next ' + (current_page === lp ? 'disabled' : '') + '"><a href="#">next</a></li>';
         $(element).append(menuHtml);
-        
+
         return true;
     };
 
 })(jQuery);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
