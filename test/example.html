@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="author" content="Sabbir Hossain Rupom">
+        <meta name="description" content="Simple javascript pagination plugin using jquery and bootstrap CSS">
+        <meta name="keywords" content="HTML,CSS,JSON,JavaScript,jQuery,Pagination,Dynamic Pagination">
+
+        <!-- Load Bootstrap3 library css from CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <style>
+            /*
+            * Simple CSS Styles
+            */
+            .t-head div {
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .row-item {
+                padding: 5px 0;
+                border-top: 1px solid #ccc;
+            }
+            .disabled {
+                pointer-events: none;
+            }
+        </style>
+
+        <!-- Load jQuery library script from CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Load Bootstrap3 library script from CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <!-- Load our pagination script from local source -->
+        <script src="../pagination.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h2>Simple Jquery Pagination</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <hr>
+                        <h4>Various songs are listed below:</h4>
+                        <br>
+                        <div class="row t-head">
+                            <div class="col-xs-6">Song</div><div class="col-xs-3">Artist</div><div class="col-xs-3">Year</div>
+                        </div>
+
+                        <div class="row row-item">
+                            <div class="col-xs-1">{count}</div>
+                            <div class="col-xs-5">{song}</div>
+                            <div class="col-xs-4">{artist}</div>
+                            <div class="col-xs-2">{year}</div>
+                        </div>
+
+                        <div class="text-center">
+                            <!-- parent element for pagination menu list -->
+                            <ul class="pagination pagination-sm custom-pagination"></ul>
+
+                            <!-- prepare necessary element attributes to pass parameters for pagination -->
+                            <input type="hidden" id="itemCount" value="">
+                            <input type="hidden" id="pageLimit" value="10">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <script>
+                $(document).ready(function () {
+                    readTextFile("data.json", function (text) {
+                        let data = JSON.parse(text);
+                        let pHtml = '<div class="row row-item">' + $('.row.row-item').html() + '</div>';
+                        let nHtml = '';
+                        $('.row.row-item').remove();
+                        $('#itemCount').val(data.length);
+                        data.forEach(function (v, i) {
+                            let res = pHtml.replace("{count}", i + 1);
+                            res = res.replace("{song}", v.song);
+                            res = res.replace("{artist}", v.artist);
+                            res = res.replace("{year}", v.year);
+                            nHtml += res;
+                        });
+
+
+                        $('.row.t-head').after(nHtml);
+
+                        setTimeout(function () {
+                            $('.custom-pagination').rpmPagination({
+                                limit: parseInt($('#pageLimit').val()),
+                                total: parseInt($('#itemCount').val()),
+                                domElement: '.row-item'
+                            });
+                        }, 100);
+                    });
+
+
+                });
+
+                function readTextFile(file, callback) {
+                    var rawFile = new XMLHttpRequest();
+                    rawFile.overrideMimeType("application/json");
+                    rawFile.open("GET", file, true);
+                    rawFile.onreadystatechange = function () {
+                        if (rawFile.readyState === 4 && rawFile.status == "200") {
+                            callback(rawFile.responseText);
+                        }
+                    }
+                    rawFile.send(null);
+                }
+            </script>
+        </footer>
+    </body>
+</html>
