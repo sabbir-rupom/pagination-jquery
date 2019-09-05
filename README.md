@@ -65,6 +65,8 @@ Pagination items limit which are to be displayed in each pagination
 <div class="page-item"></div>
 <div class="page-item"></div>
 
+<ul class="pagination custom-pagination"></ul>
+
 <script>
     $(document).ready(function () {
         $('.custom-pagination').rpmPagination({
@@ -88,6 +90,7 @@ Pagination items limit which are to be displayed in each pagination
 * **Sabbir Hossain (Rupom)** - *Web Developer* - [https://sabbirrupom.com/](https://sabbirrupom.com/)
 
 [⬆ back to top](#table-of-contents)
+
 
 
 
