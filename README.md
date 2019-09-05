@@ -90,7 +90,3 @@ Pagination items limit which are to be displayed in each pagination
 * **Sabbir Hossain (Rupom)** - *Web Developer* - [https://sabbirrupom.com/](https://sabbirrupom.com/)
 
 [⬆ back to top](#table-of-contents)
-
-
-
-
