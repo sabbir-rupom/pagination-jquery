@@ -58,12 +58,12 @@ Pagination items limit which are to be displayed in each pagination
 ## Sample Template
 
 ```html
-<div class="page-item"></div>
-<div class="page-item"></div>
-<div class="page-item"></div>
-<div class="page-item"></div>
-<div class="page-item"></div>
-<div class="page-item"></div>
+<div class="page-item">content 1</div>
+<div class="page-item">content 2</div>
+<div class="page-item">content 3</div>
+<div class="page-item">content 4</div>
+<div class="page-item">content 5</div>
+<div class="page-item">content 6</div>
 
 <ul class="pagination custom-pagination"></ul>
 
@@ -90,4 +90,5 @@ Pagination items limit which are to be displayed in each pagination
 * **Sabbir Hossain (Rupom)** - *Web Developer* - [https://sabbirrupom.com/](https://sabbirrupom.com/)
 
 [⬆ back to top](#topics-list-container)
+
 

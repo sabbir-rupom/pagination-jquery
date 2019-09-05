@@ -150,10 +150,15 @@
 
         menuHtml = '<li class="page-num prev ' + (current_page === fp ? 'disabled' : '') + '"><a href="#">prev</a></li>';
         for (let i = 0; i < pageArray.length; i++) {
-            if (pageArray[i] === '...') {
-                menuHtml += '<li class="page-num page-inf disabled"><a data-page_no="..." href="#">...</a></li>';
+            if (lp <= i) {
+                break;
             } else {
-                menuHtml += '<li class="page-num page-' + pageArray[i] + ' ' + (pageArray[i] === current_page ? 'disabled' : '') + '"><a data-page_no="' + pageArray[i] + '" href="#">' + pageArray[i] + '</a></li>';
+
+                if (pageArray[i] === '...') {
+                    menuHtml += '<li class="page-num page-inf disabled"><a data-page_no="..." href="#">...</a></li>';
+                } else {
+                    menuHtml += '<li class="page-num page-' + pageArray[i] + ' ' + (pageArray[i] === current_page ? 'disabled' : '') + '"><a data-page_no="' + pageArray[i] + '" href="#">' + pageArray[i] + '</a></li>';
+                }
             }
         }
         menuHtml += '<li class="page-num next ' + (current_page === lp ? 'disabled' : '') + '"><a href="#">next</a></li>';
