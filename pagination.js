@@ -6,7 +6,7 @@
  * Copyright 2019, Sabbir Hossain Rupom
  */
 
-/*jshint esversion: 6 */
+/* jshint esversion: 6 */
 (function ($) {
     "use strict";
     /**
@@ -163,6 +163,3 @@
     };
 
 })(jQuery);
-
-
-
