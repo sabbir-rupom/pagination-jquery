@@ -1,7 +1,7 @@
 /**
- * jquery-rpmPagination - v1.0
+ * jquery-rpmPagination - v2.0
  * A jQuery plugin for simple dynamic frontend pagination with Bootstrap CSS
- * https://github.com/
+ * https://github.com/sabbir-rupom/pagination-jquery
  *  
  * Copyright 2019, Sabbir Hossain Rupom
  */
@@ -13,23 +13,32 @@
      * Plugin root function rpmPagination()
      * 
      * @param object options Option parameter for intializing pagination plugin
-     * *-----* {property} limit Pagination item limit, [ optional ] default is 10 
-     * *-----* {property} total Pagination item count in total [ optional ]
-     * *-----* {property} domElement Html element [tag/class] which will be count as Pagination item [ must be provided ]
+     * *-----* {property} limit         Pagination item limit, [ optional ] default is 10 
+     * *-----* {property} total         Pagination item count in total [ optional ]
+     * *-----* {property} currentPage   Current/Active page number of pagination  
+     * *-----* {property} domElement    Html element [tag/class] which will be count as Pagination item 
+     * *-------------------------------[ must be provided for dynamic pagination without page refresh, optional otherwise ]
+     * *-----* {property} refresh       Page refresh flag, if enabled- page will be refreshed with query/get/post parameters [ optional ]
+     * *-----* {property} link          Page refresh link [ must be provided if refresh flag is enabled, optional otherwise ]
+     * *-----* {property} formElement   Pagination item filter form identity element [ optional ]
+     * *-------------------------------[ If page has custom item search filter form, the pagination function will use the form to refresh the page with limit/offset parameters ]
+     * 
      * @returns boolean true
      */
     $.fn.rpmPagination = function (options) {
         var settings = $.extend({
             limit: 10,
             total: 0,
-            domElement: '.p-item'
+            currentPage: 1,
+            domElement: '.p-item',
+            refresh: false,
+            link: null,
+            formElement: null
         }, options);
 
         let $this = $(this),
                 pages = 1,
-                rpmCurrentPage = 1,
                 rpmPageNext = settings.limit,
-                rpmPageLimit = settings.limit,
                 rpmPageTotal = settings.total,
                 tBool = false,
                 rpmPageDomElem = settings.domElement, rpmCustomDomElem = 'p-' + Math.random().toString(36).substr(2, 6);
@@ -46,13 +55,17 @@
             $(obj).addClass(rpmCustomDomElem + '-' + parseInt(i + 1));
         });
 
-        if (rpmPageTotal > rpmPageLimit) {
-            pages = parseInt((rpmPageTotal / rpmPageLimit) + 1);
+        if (rpmPageTotal > settings.limit) {
+            pages = parseInt((rpmPageTotal / settings.limit) + 1);
         }
 
-        preparePageMenus(rpmCurrentPage, pages, $this);
+        preparePageMenus(settings.currentPage, pages, $this);
 
-        [rpmCurrentPage, rpmPageNext] = preparePageItems(rpmCurrentPage, rpmPageNext, rpmPageLimit, rpmCustomDomElem, 'page-num');
+        [settings.currentPage, rpmPageNext] = preparePageItems(settings.currentPage, rpmPageNext, settings.limit, rpmCustomDomElem, 'page-num');
+        
+        if(settings.refresh && $('.' + rpmCustomDomElem).length > 0) {
+            $('.' + rpmCustomDomElem).removeClass('hide');
+        }
 
         /**
          * Process html pagination on pagination-menu click
@@ -63,23 +76,68 @@
             if ($(this).parent().hasClass('disabled') || $(this).parent($this).length === 0) {
                 return false;
             } else {
-                if ($(this).parent().hasClass('prev')) {
-                    [rpmCurrentPage, rpmPageNext] = preparePageItems(rpmCurrentPage, rpmPageNext, rpmPageLimit, rpmCustomDomElem, 'prev');
-                } else if ($(this).parent().hasClass('next')) {
-                    [rpmCurrentPage, rpmPageNext] = preparePageItems(rpmCurrentPage, rpmPageNext, rpmPageLimit, rpmCustomDomElem, 'next');
+                if (settings.refresh === true) {
+                    refreshPageforItems($(this), settings.currentPage, settings.limit, settings.link, settings.formElement);
                 } else {
-                    let cl = $(this).data('page_no');
-                    rpmCurrentPage = parseInt(cl);
-                    [rpmCurrentPage, rpmPageNext] = preparePageItems(rpmCurrentPage, rpmPageNext, rpmPageLimit, rpmCustomDomElem, 'page-num');
+                    if ($(this).parent().hasClass('prev')) {
+                        [settings.currentPage, rpmPageNext] = preparePageItems(settings.currentPage, rpmPageNext, settings.limit, rpmCustomDomElem, 'prev');
+                    } else if ($(this).parent().hasClass('next')) {
+                        [settings.currentPage, rpmPageNext] = preparePageItems(settings.currentPage, rpmPageNext, settings.limit, rpmCustomDomElem, 'next');
+                    } else {
+                        let cl = $(this).data('page_no');
+                        settings.currentPage = parseInt(cl);
+                        [settings.currentPage, rpmPageNext] = preparePageItems(settings.currentPage, rpmPageNext, settings.limit, rpmCustomDomElem, 'page-num');
+                    }
                 }
 
-                preparePageMenus(rpmCurrentPage, pages, $this);
+                preparePageMenus(settings.currentPage, pages, $this);
             }
 
         });
 
         return true;
     };
+    
+    /**
+     * 
+     * @param {obj} obj Pagination item anchor object
+     * @param {int} current Current page number
+     * @param {int} limit Pagination item limit
+     * @param {string} url Custom source url for passing query parameters
+     * @param {string} form Query-Element-String to determined existing form 
+     * @returns {} nothing
+     */    
+    function refreshPageforItems(obj, current, limit, url, form) {
+        let offset = 0;
+        
+        if (obj.parent().hasClass('prev')) {
+            offset = limit * (current - 2);
+        } else if (obj.parent().hasClass('next')) {
+            offset = limit * current;
+
+        } else {
+            let cl = obj.data('page_no');
+            current = parseInt(cl);
+            offset = limit * (current - 1);
+        }
+
+        let ap;
+        if (form === null || form === '' || $(form).length <= 0) {
+            ap = '?';
+            if (url.includes('?')) {
+                ap = '&';
+            }
+
+            window.location.href = url + ap + 'limit=' + limit + '&offset=' + offset;
+        } else {
+            form = $(form);
+        }
+
+        form.append($("<input />").attr("type", "hidden").attr("name", "limit").attr("value", limit));
+        form.append($("<input />").attr("type", "hidden").attr("name", "offset").attr("value", offset)).submit();
+        
+        return;
+    }
 
     /**
      * Show / Hide pagination items based on current page-menu

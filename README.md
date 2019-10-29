@@ -2,15 +2,20 @@
 
 ## Getting Started
 
-In various front-end application developers intend to paginate table data / data list in their own custom theme without refreshing the page. For such circumstances, 
-my pagination plugin can be used easily. [see demo](https://projects.sabbirrupom.com/rpm-pagination/)
+In various front-end application developers intend to paginate tabular data / data list in their own custom way.
+
+* sometimes, without page refresh for fast user interactivity
+* sometimes, in a regular pagination with page refresh by sending limit/offset query strings
+* sometimes, with searchable form parameters 
+
+For such circumstances, my pagination plugin can be used easily. [see demo](https://projects.sabbirrupom.com/rpm-pagination/)
 
 ### Prerequisites
 
 Before you begin, you need following things to be loaded beforehand:
 
 * jQuery 2+ 
-* Bootstrap CSS 3+
+* Bootstrap CSS ^3+
 
 ## Usage
 
@@ -28,7 +33,7 @@ $('[ pagination-menu-holder ]').rpmPagination({ domElement: '[ pagination-item ]
 
 Here,
 * [ pagination-menu-holder ] => any suitable html tag [ e.g `<ul>` ] or id [ e.g `#custom_pagination` ] or class [ e.g `.custom-pagimation` ]
-* [ pagination-item ] => Pagination items which are to be viewed in pagination
+* [ pagination-item ] => Pagination item elements which are to be viewed in pagination
 
 ## Options
 
@@ -37,9 +42,10 @@ Option parameters are as follows:
 ### domElement
 
 - Type: `string`
-- Optional: No
+- Optional: No, if refresh flag is disabled
 
-Parent elements of a pagination item which are to be viewed in pagination
+Common class element for all tabular data items. The items of the active pagination number will be shown, other class elements will be kept hidden  
+[see demo](https://projects.sabbirrupom.com/rpm-pagination/example-1.html
 
 ### limit
 
@@ -49,11 +55,47 @@ Parent elements of a pagination item which are to be viewed in pagination
 
 Pagination items limit which are to be displayed in each pagination
 
+### currentPage
+
+- Type: `integer`
+- Optional: Yes
+- Default: 1
+
+If provided, corresponding pagination menu link will be set to active
+
 ### total
 
 - Type: `integer`
 - Optional: Yes
-- Default: [ no default value at particular. total `domElement` are counted ]
+- Default: total `domElement` are counted, if refresh flag is disabled
+
+Total number of page items for pagination
+
+### refresh
+
+- Type: `boolean`
+- Optional: Yes
+- Default: false 
+
+Refresh flag enables page refresh with limit/offset parameters to pass alongside [ GET / POST ]
+
+### link
+
+- Type: `string`
+- Optional: No, if `refresh` flag is enabled and search `formElement` is not set. optional otherwise  
+
+Page refresh link where server will fetch data according to limit and offset parameter which is sent as get query string 
+[see demo](https://projects.sabbirrupom.com/rpm-pagination/example-2.html)
+
+### formElement
+
+- Type: `string`
+- Optional: Yes
+
+User can set this parameter with pagination configuration to point out the custom item search filter form (if exists)
+if configured with valid form identifier element, search form will be submitted to form action url along with limit / offset parameter from
+pagination menu link. 
+[see demo](https://projects.sabbirrupom.com/rpm-pagination/example-3.html)
 
 ## Sample Template
 
@@ -90,5 +132,11 @@ Pagination items limit which are to be displayed in each pagination
 * **Sabbir Hossain (Rupom)** - *Web Developer* - [https://sabbirrupom.com/](https://sabbirrupom.com/)
 
 [⬆ back to top](#topics-list-container)
+
+
+
+
+
+
 
 
