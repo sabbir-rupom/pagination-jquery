@@ -1,4 +1,4 @@
-# Simple Pagination Plugin in Javascript / jQuery
+# Simple Pagination Plugin in jQuery / Bootstrap
 
 ## Getting Started
 
@@ -14,8 +14,8 @@ For such circumstances, my pagination plugin can be used easily. [see demo](http
 
 Before you begin, you need following things to be loaded beforehand:
 
-* jQuery 2+ 
-* Bootstrap CSS ^3+
+* jQuery 2+ [ tested upto 3.4.1+ ]
+* Bootstrap CSS 3+ [ tested upto 4.3.1+ ]
 
 ## Usage
 
@@ -132,6 +132,11 @@ pagination menu link.
 * **Sabbir Hossain (Rupom)** - *Web Developer* - [https://sabbirrupom.com/](https://sabbirrupom.com/)
 
 [⬆ back to top](#topics-list-container)
+
+
+
+
+
 
 
 

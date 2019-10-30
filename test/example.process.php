@@ -1,9 +1,18 @@
 <?php
+/**
+ * Sample page UI for my pagination system example
+ *
+ * @author      Sabbir Hossain Rupom <sabbir.rupom@gmail.com>
+ * @version     2.0
+ * @link        https://github.com/sabbir-rupom/pagination-jquery
+ */
+
+# Get data resource
 $data = getData('data.json');
 
 $method = $song = $artist = '';
 $offset = $itemCount = 0;
-$limit = 10;
+$limit = 8;
 
 if (!empty($_GET)) {
     $method = 'get';
@@ -37,17 +46,25 @@ $limit = isset($_REQUEST['limit']) ? intval($_REQUEST['limit']) : $limit;
 $offset = isset($_REQUEST['offset']) ? intval($_REQUEST['offset']) : $offset;
 $itemCount = count($data);
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Simple Pagination Bootstrap/jQuery</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
         <meta name="author" content="Sabbir Hossain Rupom">
         <meta name="description" content="Simple javascript pagination plugin using jquery and bootstrap CSS">
         <meta name="keywords" content="HTML,CSS,JSON,JavaScript,jQuery,Pagination,Dynamic Pagination">
+        <link rel="shortcut icon" type="image/png" href="../assets/image/favicon.png"/>
 
-        <!-- Load Bootstrap3 library css from CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <!-- Load jQUery and Bootstrap library resources from CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
         <style>
             /*
             * Simple CSS Styles
@@ -69,12 +86,6 @@ $itemCount = count($data);
             }
         </style>
 
-        <!-- Load jQuery library script from CDN -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-        <!-- Load Bootstrap3 library script from CDN -->
-        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
-
         <!-- Load our pagination script from local source -->
         <script src="../pagination.min.js"></script>
     </head>
@@ -82,10 +93,10 @@ $itemCount = count($data);
         <header>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-8 offset-md-2 mt-3 text-center">
                         <h2>Simple Pagination Example</h2>
                         <h4><?= $method == 'post' ? 'Paginate items through form submission by post method' : 'Refresh page with limit & offset query string to paginate' ?></h4>
-                        <h5>built in jQuery with bootstrap-3 pagination class</h5>
+                        <h5>built in jQuery with <a target="_blank" href="https://getbootstrap.com/docs/4.0/components/pagination/">bootstrap</a> pagination class</h5>
                     </div>
                 </div>
             </div>
@@ -93,7 +104,7 @@ $itemCount = count($data);
         <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-8 offset-md-2">
                         <hr>
                         <?php
                         if ($method === 'post') {
@@ -110,7 +121,7 @@ $itemCount = count($data);
                         ?>
                         <h4>Various songs are listed below:</h4>
                         <div class="row t-head">
-                            <div class="col-xs-1">#</div><div class="col-xs-5">Song</div><div class="col-xs-4">Artist</div><div class="col-xs-2">Year</div>
+                            <div class="col-sm-1">#</div><div class="col-sm-5">Song</div><div class="col-sm-4">Artist</div><div class="col-sm-2">Year</div>
                         </div>
                         <?php
                         if (!empty($data)) {
@@ -119,10 +130,10 @@ $itemCount = count($data);
                                 if ($offset < $c && ($limit + $offset > $key)) {
                                     ?>
                                     <div class="row row-item">
-                                        <div class="col-xs-1"><?= $c ?></div>
-                                        <div class="col-xs-5"><?= $value['song'] ?></div>
-                                        <div class="col-xs-4"><?= $value['artist'] ?></div>
-                                        <div class="col-xs-2"><?= $value['year'] ?></div>
+                                        <div class="col-sm-1"><?= $c ?></div>
+                                        <div class="col-sm-5"><?= $value['song'] ?></div>
+                                        <div class="col-sm-4"><?= $value['artist'] ?></div>
+                                        <div class="col-sm-2"><?= $value['year'] ?></div>
                                     </div>
                                     <?php
                                 }
@@ -130,9 +141,9 @@ $itemCount = count($data);
 
                             if ($itemCount > $limit) {
                                 ?>
-                                <div class="text-center">
+                                <div class="d-flex justify-content-center mt-3">
                                     <!-- parent element for pagination menu list -->
-                                    <ul class="pagination pagination-sm custom-pagination"></ul>
+                                    <ul class="pagination pagination-md custom-pagination"></ul>
                                 </div>
 
                                 <?php

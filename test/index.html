@@ -45,8 +45,8 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <h2>Simple Pagination Example</h2>
-                        <h4>Refresh page with limit & offset query string to paginate</h4>
-                        <h5>built in jQuery with <a target="_blank" href="https://getbootstrap.com/docs/3.3/components/#pagination">bootstrap</a> pagination class</h5>
+                        <h4>Show/Hide items and paginate after loading all</h4>
+                        <h5>built in jQuery with bootstrap-3 pagination class</h5>
                     </div>
                 </div>
             </div>
@@ -83,24 +83,18 @@
         <footer>
             <script>
                 $(document).ready(function () {
-                    let itemLimit = parseInt($('#pageLimit').val());
-                    let itemTotal = 0;
-
                     readTextFile("data.json", function (text) {
                         let data = JSON.parse(text);
                         let pHtml = '<div class="row row-item">' + $('.row.row-item').html() + '</div>';
                         let nHtml = '';
                         $('.row.row-item').remove();
-                        itemTotal = data.length;
-                        $('#itemCount').val(itemTotal);
+                        $('#itemCount').val(data.length);
                         data.forEach(function (v, i) {
-                            if (i < itemLimit) {
-                                let res = pHtml.replace("{count}", i + 1);
-                                res = res.replace("{song}", v.song);
-                                res = res.replace("{artist}", v.artist);
-                                res = res.replace("{year}", v.year);
-                                nHtml += res;
-                            }
+                            let res = pHtml.replace("{count}", i + 1);
+                            res = res.replace("{song}", v.song);
+                            res = res.replace("{artist}", v.artist);
+                            res = res.replace("{year}", v.year);
+                            nHtml += res;
                         });
 
 
@@ -108,13 +102,11 @@
 
                         setTimeout(function () {
                             $('.custom-pagination').rpmPagination({
-                                limit: itemLimit,
-                                total: itemTotal,
-                                currentPage: 1,
-                                link: 'example.process.php',
-                                refresh: true
+                                limit: parseInt($('#pageLimit').val()),
+                                total: parseInt($('#itemCount').val()),
+                                domElement: '.row-item'
                             });
-                        }, 200);
+                        }, 100);
                     });
 
 

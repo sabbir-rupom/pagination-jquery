@@ -25,6 +25,14 @@
      * 
      * @returns boolean true
      */
+    
+    var bsVersion = 3;
+    if(typeof $.fn.tooltip !== 'undefined') {
+        bsVersion = $.fn.tooltip.Constructor.VERSION.split('.')[0];
+    } 
+    var rpmListClass = 'page-num',
+            rpmAnchorClass = '', rpmHideClass = 'hide';
+
     $.fn.rpmPagination = function (options) {
         var settings = $.extend({
             limit: 10,
@@ -41,7 +49,13 @@
                 rpmPageNext = settings.limit,
                 rpmPageTotal = settings.total,
                 tBool = false,
-                rpmPageDomElem = settings.domElement, rpmCustomDomElem = 'p-' + Math.random().toString(36).substr(2, 6);
+                rpmPageDomElem = settings.domElement, rpmCustomDomElem = 'p-' + Math.random().toString(36).substr(2, 6),
+                version = bsVersion[0];
+
+        if (version == 4) {
+            rpmListClass = 'page-item ' + rpmListClass;
+            rpmHideClass = 'd-none', rpmAnchorClass = 'page-link';
+        }
 
         if (rpmPageTotal <= 0) {
             tBool = true;
@@ -62,9 +76,9 @@
         preparePageMenus(settings.currentPage, pages, $this);
 
         [settings.currentPage, rpmPageNext] = preparePageItems(settings.currentPage, rpmPageNext, settings.limit, rpmCustomDomElem, 'page-num');
-        
-        if(settings.refresh && $('.' + rpmCustomDomElem).length > 0) {
-            $('.' + rpmCustomDomElem).removeClass('hide');
+
+        if (settings.refresh && $('.' + rpmCustomDomElem).length > 0) {
+            $('.' + rpmCustomDomElem).removeClass(rpmHideClass)
         }
 
         /**
@@ -97,7 +111,7 @@
 
         return true;
     };
-    
+
     /**
      * 
      * @param {obj} obj Pagination item anchor object
@@ -106,10 +120,10 @@
      * @param {string} url Custom source url for passing query parameters
      * @param {string} form Query-Element-String to determined existing form 
      * @returns {} nothing
-     */    
+     */
     function refreshPageforItems(obj, current, limit, url, form) {
         let offset = 0;
-        
+
         if (obj.parent().hasClass('prev')) {
             offset = limit * (current - 2);
         } else if (obj.parent().hasClass('next')) {
@@ -135,7 +149,7 @@
 
         form.append($("<input />").attr("type", "hidden").attr("name", "limit").attr("value", limit));
         form.append($("<input />").attr("type", "hidden").attr("name", "offset").attr("value", offset)).submit();
-        
+
         return;
     }
 
@@ -151,7 +165,7 @@
      */
     var preparePageItems = function (current_page, next, limit, element, type) {
 
-        $('.' + element).addClass('hide');
+        $('.' + element).addClass(rpmHideClass)
 
         var current = 0;
 
@@ -159,7 +173,7 @@
             next = next - limit;
             current = next - limit + 1;
             for (let i = current; i <= next; i++) {
-                $('.' + element + '-' + i).removeClass('hide');
+                $('.' + element + '-' + i).removeClass(rpmHideClass);
             }
             current_page--;
 
@@ -167,14 +181,14 @@
             current = next + 1;
             next = next + limit;
             for (let i = current; i <= next; i++) {
-                $('.' + element + '-' + i).removeClass('hide');
+                $('.' + element + '-' + i).removeClass(rpmHideClass);
             }
             current_page++;
         } else if (type === 'page-num') {
             current = (limit * (current_page - 1)) + 1;
             next = (limit * (current_page - 1)) + limit;
             for (let i = current; i <= next; i++) {
-                $('.' + element + '-' + i).removeClass('hide');
+                $('.' + element + '-' + i).removeClass(rpmHideClass);
             }
         }
 
@@ -190,6 +204,7 @@
      * @returns {boolean} true
      */
     var preparePageMenus = function (current_page, pages, element) {
+
         $(element).html('');
         let pageArray = [], fp = 1, lp = (pages - 1);
         let menuHtml = '';
@@ -206,20 +221,20 @@
             pageArray = [1, '...', current_page - 1, current_page, current_page + 1, '...', lp];
         }
 
-        menuHtml = '<li class="page-num prev ' + (current_page === fp ? 'disabled' : '') + '"><a href="#">prev</a></li>';
+        menuHtml = '<li class="' + rpmListClass + ' prev ' + (current_page === fp ? 'disabled' : '') + '"><a class="' + rpmAnchorClass + '" href="#">prev</a></li>';
         for (let i = 0; i < pageArray.length; i++) {
             if (lp <= i) {
                 break;
             } else {
 
                 if (pageArray[i] === '...') {
-                    menuHtml += '<li class="page-num page-inf disabled"><a data-page_no="..." href="#">...</a></li>';
+                    menuHtml += '<li class="' + rpmListClass + ' page-inf disabled"><a class="' + rpmAnchorClass + '" data-page_no="..." href="#">...</a></li>';
                 } else {
-                    menuHtml += '<li class="page-num page-' + pageArray[i] + ' ' + (pageArray[i] === current_page ? 'disabled' : '') + '"><a data-page_no="' + pageArray[i] + '" href="#">' + pageArray[i] + '</a></li>';
+                    menuHtml += '<li class="' + rpmListClass + ' page-' + pageArray[i] + ' ' + (pageArray[i] === current_page ? 'disabled' : '') + '"><a class="' + rpmAnchorClass + '" data-page_no="' + pageArray[i] + '" href="#">' + pageArray[i] + '</a></li>';
                 }
             }
         }
-        menuHtml += '<li class="page-num next ' + (current_page === lp ? 'disabled' : '') + '"><a href="#">next</a></li>';
+        menuHtml += '<li class="' + rpmListClass + ' next ' + (current_page === lp ? 'disabled' : '') + '"><a class="' + rpmAnchorClass + '" href="#">next</a></li>';
         $(element).append(menuHtml);
 
         return true;
