@@ -12,7 +12,7 @@ $data = getData('data.json');
 
 $method = $song = $artist = '';
 $offset = $itemCount = 0;
-$limit = 8;
+$limit = 10;
 
 if (!empty($_GET)) {
     $method = 'get';
@@ -45,6 +45,8 @@ if (!empty($_GET)) {
 $limit = isset($_REQUEST['limit']) ? intval($_REQUEST['limit']) : $limit;
 $offset = isset($_REQUEST['offset']) ? intval($_REQUEST['offset']) : $offset;
 $itemCount = count($data);
+
+$activeMenu = ($method === 'post') ? 3 : (isset($_REQUEST['limit']) ? 2 : 1);
 ?>
 
 <!DOCTYPE html>
@@ -91,6 +93,33 @@ $itemCount = count($data);
     </head>
     <body>
         <header>
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <!-- Brand -->
+                <a class="navbar-brand" href="https://projects.sabbirrupom.com/rpm-pagination/">RPM Pagination</a>
+
+                <!-- Toggler/collapsibe Button -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar links -->
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/sabbir-rupom/pagination-jquery/blob/master/README.md">Documentation</a>
+                        </li>
+                        <li class="nav-item <?= $activeMenu === 1 ? 'active' : '' ?>">
+                            <a class="nav-link" href="https://projects.sabbirrupom.com/rpm-pagination/test/example-1.html">Example 1</a>
+                        </li>
+                        <li class="nav-item <?= $activeMenu === 2 ? 'active' : '' ?>">
+                            <a class="nav-link" href="https://projects.sabbirrupom.com/rpm-pagination/test/example-2.html">Example 2</a>
+                        </li>
+                        <li class="nav-item <?= $activeMenu === 3 ? 'active' : '' ?>">
+                            <a class="nav-link" href="https://projects.sabbirrupom.com/rpm-pagination/test/example-3.html">Example 3</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 offset-md-2 mt-3 text-center">
@@ -111,9 +140,9 @@ $itemCount = count($data);
                             ?>
                             <form action="example.process.php" method="POST" id="myForm">
                                 <div class="row">
-                                    <div class="col-md-5">Song name:&nbsp;<input type="text" name="song" placeholder="search songs ..." value="<?= $song ?>"></div>
-                                    <div class="col-md-5">Artist name:&nbsp;<input type="text" name="artist" placeholder="search artists ..." value="<?= $artist ?>"></div>
-                                    <div class="col-md-2"><br><input type="submit" value="Submit"></div>
+                                    <div class="col-md-5">Song:&nbsp;<input type="text" name="song" placeholder="search songs ..." value="<?= $song ?>"></div>
+                                    <div class="col-md-5">Artist:&nbsp;<input type="text" name="artist" placeholder="search artists ..." value="<?= $artist ?>"></div>
+                                    <div class="col-md-2"><input type="submit" value="Submit"></div>
                                 </div>
                             </form>
                             <?php
