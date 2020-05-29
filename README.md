@@ -1,4 +1,4 @@
-# Simple Pagination Plugin in jQuery / Bootstrap [ V2.0 ]
+# Simple Pagination Plugin in jQuery / Bootstrap [ V2.1 ]
 
 ## Getting Started
 
@@ -132,18 +132,3 @@ pagination menu link.
 * **Sabbir Hossain (Rupom)** - *Web Developer* - [https://sabbirrupom.com/](https://sabbirrupom.com/)
 
 [⬆ back to top](#topics-list-container)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
