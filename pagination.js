@@ -70,7 +70,10 @@
         });
 
         if (rpmPageTotal > settings.limit) {
-            pages = parseInt((rpmPageTotal / settings.limit) + 1);
+            pages = parseInt(rpmPageTotal / settings.limit);
+            if(rpmPageTotal % settings.limit > 0) {
+                pages += 1;
+            }
         }
 
         preparePageMenus(settings.currentPage, pages, $this);
@@ -204,19 +207,19 @@
      * @returns {boolean} true
      */
     var preparePageMenus = function (current_page, pages, element) {
-
+        
         $(element).html('');
-        let pageArray = [], fp = 1, lp = (pages - 1);
+        let pageArray = [], fp = 1, lp = pages;
         let menuHtml = '';
-
-        if (Math.abs(current_page - fp) < 3) {
-            pageArray = [1, 2, 3, 4, '...', lp];
-        } else if (Math.abs(current_page - lp) < 3) {
-            pageArray = [1, '...', lp - 3, lp - 2, lp - 1, lp];
-        } else if (lp <= 6) {
+        
+        if (lp <= 6) {
             for (let i = 1; i <= lp; i++) {
                 pageArray.push(i);
             }
+        } else if (Math.abs(current_page - fp) < 3) {
+            pageArray = [1, 2, 3, 4, '...', lp];
+        } else if (Math.abs(current_page - lp) < 3) {
+            pageArray = [1, '...', lp - 3, lp - 2, lp - 1, lp];
         } else {
             pageArray = [1, '...', current_page - 1, current_page, current_page + 1, '...', lp];
         }
