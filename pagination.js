@@ -54,7 +54,8 @@
 
         if (version == 4) {
             rpmListClass = 'page-item ' + rpmListClass;
-            rpmHideClass = 'd-none', rpmAnchorClass = 'page-link';
+            rpmHideClass = 'd-none'; 
+            rpmAnchorClass = 'page-link';
         }
 
         if (rpmPageTotal <= 0) {
@@ -81,7 +82,7 @@
         [settings.currentPage, rpmPageNext] = preparePageItems(settings.currentPage, rpmPageNext, settings.limit, rpmCustomDomElem, 'page-num');
 
         if (settings.refresh && $('.' + rpmCustomDomElem).length > 0) {
-            $('.' + rpmCustomDomElem).removeClass(rpmHideClass)
+            $('.' + rpmCustomDomElem).removeClass(rpmHideClass);
         }
 
         /**
@@ -168,7 +169,7 @@
      */
     var preparePageItems = function (current_page, next, limit, element, type) {
 
-        $('.' + element).addClass(rpmHideClass)
+        $('.' + element).addClass(rpmHideClass);
 
         var current = 0;
 

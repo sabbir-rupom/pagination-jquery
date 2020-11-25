@@ -1,4 +1,4 @@
-# Simple Pagination Plugin in jQuery / Bootstrap [ V2.1 ]
+# Simple Pagination Plugin in jQuery / Bootstrap [ V2.1.1 ]
 
 ## Getting Started
 
@@ -126,6 +126,12 @@ pagination menu link.
 - Mozilla Firefox
 - Microsoft Edge
 - Safari
+
+# Changelog
+## [2.0.1] - 2020-11-26
+### Added
+- javascript statement issue fix
+- version updated
 
 ## Author
 
