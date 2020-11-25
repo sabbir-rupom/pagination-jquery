@@ -128,10 +128,26 @@ pagination menu link.
 - Safari
 
 # Changelog
-## [2.0.1] - 2020-11-26
-### Added
+## [2.1.1] - 2020-11-26
+### Updated
 - javascript statement issue fix
 - version updated
+- test php script bug is fixed
+
+## [2.1] - 2020-05-01
+### Updated
+- pagination bug fixed for last page items
+### Added
+- test examples added
+- ES6 standard is followed
+
+## [2.0] - 2020-01-01
+### Added
+- bootstrap 4 support added
+
+## [1.0] - 2019
+### Added
+- project initialized
 
 ## Author
 
