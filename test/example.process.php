@@ -225,11 +225,11 @@ function getData($dataFile) {
     try {
         // Check if any error found during data load from json file
         if (file_exists($dataFile) == false) {
-            throw Exception('data file not exist');
+            throw new Exception('data file not exist');
         }
         $data = json_decode(file_get_contents($dataFile), true);
         if (empty($data)) {
-            throw Exception('data file is empty');
+            throw new Exception('data file is empty');
         }
     } catch (Exception $exc) {
         die($exc->getTraceAsString());

@@ -1,9 +1,9 @@
 /**
- * jquery-rpmPagination - v2.0
+ * jquery-rpmPagination - v2.1.1
  * A jQuery plugin for simple dynamic frontend pagination with Bootstrap CSS
  * https://github.com/sabbir-rupom/pagination-jquery
  *  
- * Copyright 2019, Sabbir Hossain Rupom
+ * Copyright 2020, Sabbir Hossain Rupom
  */
 
 /* jshint esversion: 6 */
